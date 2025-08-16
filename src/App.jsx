@@ -101,7 +101,7 @@ function useLocalStorage(key, initial) {
     } catch { return initial; }
   });
   useEffect(() => {
-    try { localStorage.setItem(key, JSON.stringify(value)); } catch {}
+    try { localStorage.setItem(key, JSON.stringify(value)); } catch { /* ignore */ }
   }, [key, value]);
   return [value, setValue];
 }
@@ -197,7 +197,7 @@ export default function App(){
         return merged.sort((a,b)=> new Date(b.time)-new Date(a.time));
       });
       alert("Importación completada");
-    } catch (e){
+    } catch {
       alert("No se pudo importar el CSV");
     } finally { if (fileInputRef.current) fileInputRef.current.value = ""; }
   }
@@ -228,7 +228,6 @@ export default function App(){
     expect('diffToCountdown shows 00:01:', diffToCountdown(future).startsWith('00:01'));
 
     setTestResults(results);
-    // eslint-disable-next-line no-console
     console.table(results.map(r=>({ test: r.name, pass: r.pass })));
   }, []);
 
@@ -378,8 +377,6 @@ export default function App(){
         </section>
       </main>
 
-      {/* Tailwind CDN */}
-      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" />
     </div>
   );
 }
